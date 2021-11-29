@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetrySample.Console
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{770988E2-BC2B-4F41-901B-2F919BF13D7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetrySample.API", "OpenTelemetrySample.API\OpenTelemetrySample.API.csproj", "{22C224DA-4732-44FC-A493-3958D0045B74}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +19,17 @@ Global
 		{A66F1421-1581-4335-8DB0-DA32D0EFB43F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A66F1421-1581-4335-8DB0-DA32D0EFB43F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A66F1421-1581-4335-8DB0-DA32D0EFB43F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22C224DA-4732-44FC-A493-3958D0045B74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22C224DA-4732-44FC-A493-3958D0045B74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22C224DA-4732-44FC-A493-3958D0045B74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22C224DA-4732-44FC-A493-3958D0045B74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A66F1421-1581-4335-8DB0-DA32D0EFB43F} = {770988E2-BC2B-4F41-901B-2F919BF13D7E}
+		{22C224DA-4732-44FC-A493-3958D0045B74} = {770988E2-BC2B-4F41-901B-2F919BF13D7E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DAF1C5B-9EC8-4178-BEC4-EE63498F0CEC}
