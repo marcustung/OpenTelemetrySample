@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
+using OpenTelemetry.Resources;
 
 namespace OpenTelemetrySample
 {
@@ -12,6 +13,7 @@ namespace OpenTelemetrySample
         public static void Main()
         {
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("SampleService"))
                 .SetSampler(new AlwaysOnSampler())
                 .AddSource("MyCompany.MyProduct.MyLibrary")
                 .AddConsoleExporter()
@@ -20,7 +22,7 @@ namespace OpenTelemetrySample
             using (var activity = MyActivitySource.StartActivity("SayHello"))
             {
                 activity?.SetTag("foo", 1);
-                activity?.SetTag("bar", "Hello, World!");
+                activity?.SetTag("bar", "NET Conf 2021, Hej !");
                 activity?.SetTag("baz", new int[] { 1, 2, 3 });
             }
         }
