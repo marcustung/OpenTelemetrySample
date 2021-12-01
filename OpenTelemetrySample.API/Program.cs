@@ -9,12 +9,12 @@ namespace OpenTelemetrySample.API
 {
     class Program
     {
-        private static readonly ActivitySource MyActivitySource = new ActivitySource("MyCompany.MyProduct.MyLibrary");
+        private static readonly ActivitySource MyActivitySource = new ActivitySource("Company.Product.Library");
         static void Main(string[] args)
         {
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MyService"))
-               .AddSource("MyCompany.MyProduct.MyLibrary")
+               .AddSource("Company.Product.Library")
                .AddZipkinExporter(zipkinOptions =>
                {
                    zipkinOptions.Endpoint = new Uri("http://localhost:9411/api/v2/spans");

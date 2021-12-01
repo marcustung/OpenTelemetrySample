@@ -8,14 +8,14 @@ namespace OpenTelemetrySample
 {
     class Program
     {
-        private static readonly ActivitySource MyActivitySource = new ActivitySource("MyCompany.MyProduct.MyLibrary");
+        private static readonly ActivitySource MyActivitySource = new ActivitySource("Company.Product.Library");
 
         public static void Main()
         {
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
                 .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("SampleService"))
                 .SetSampler(new AlwaysOnSampler())
-                .AddSource("MyCompany.MyProduct.MyLibrary")
+                .AddSource("Company.Product.Library")
                 .AddConsoleExporter()
                 .Build();
 
