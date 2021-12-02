@@ -9,7 +9,7 @@ namespace OpenTelemetrySample.API
 {
     class Program
     {
-        private static readonly ActivitySource MyActivitySource = new ActivitySource("Company.Product.Library");
+        private static readonly ActivitySource MyActivitySource = new ActivitySource("Company.Product.Library", "1.0");
         static void Main(string[] args)
         {
             using var tracerProvider = Sdk.CreateTracerProviderBuilder()
