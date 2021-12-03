@@ -45,5 +45,20 @@ namespace OpenTelemetrySample.DistributeTracing.Controllers
                 throw;
             }
         }
+
+        private async Task<string> GetWeatherStaticData()
+        {
+            var rng = new Random();
+            var forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = rng.Next(-20, 55),
+                Summary = Summaries[rng.Next(Summaries.Length)]
+            })
+            .ToArray();
+
+            return JsonSerializer.Serialize(forecasts);
+        }
+
     }
 }

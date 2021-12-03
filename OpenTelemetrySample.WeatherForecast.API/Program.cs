@@ -8,31 +8,18 @@ using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace OpenTelemetrySample.DistributeTracing
+namespace OpenTelemetrySample.WeatherForecast.API
 {
     public class Program
     {
-        const string APP_NAME = "WeatherForecast Website";
+        const string APP_NAME = "WeatherForecast API";
+
         public static void Main(string[] args)
         {
             var configuration = GetConfiguration();
             Log.Logger = CreateSerilogLogger(configuration);
 
-            try
-            {
-                Log.Information("Configuring web host ({ApplicationContext})...", APP_NAME);
-                Activity.DefaultIdFormat = ActivityIdFormat.W3C;
-
-                CreateHostBuilder(args).Build().Run();
-            }
-            catch (Exception ex)
-            {
-                Log.Fatal(ex, "Program terminated unexpectedly ({ApplicationContext})!", APP_NAME);
-            }
-            finally
-            {
-                Log.CloseAndFlush();
-            }
+            CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -41,6 +28,16 @@ namespace OpenTelemetrySample.DistributeTracing
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        private static IConfiguration GetConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            return builder.Build();
+        }
 
         private static Serilog.ILogger CreateSerilogLogger(IConfiguration configuration)
         {
@@ -53,16 +50,6 @@ namespace OpenTelemetrySample.DistributeTracing
                 //.WriteTo.ApplicationInsights(instrumentationKey, TelemetryConverter.Traces)
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
-        }
-
-        private static IConfiguration GetConfiguration()
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddEnvironmentVariables();
-
-            return builder.Build();
         }
     }
 }
