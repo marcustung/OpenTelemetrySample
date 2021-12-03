@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using OpenTelemetrySample.DistributeTracing.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text.Json;
+using System.Net.Http;
 using System.Threading.Tasks;
+using OpenTelemetrySample.DistributeTracing.Models;
 
 namespace OpenTelemetrySample.DistributeTracing.Controllers
 {
@@ -15,11 +13,6 @@ namespace OpenTelemetrySample.DistributeTracing.Controllers
     [ApiController]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<WeatherForecastController> _logger;
         private static ActivitySource _activitySource = new ActivitySource(nameof(WeatherForecastController));
 
@@ -33,11 +26,28 @@ namespace OpenTelemetrySample.DistributeTracing.Controllers
         {
             try
             {
-                _logger.LogInformation("{Method} - was called ", "backend.Controllers.WeatherForecastController.Get");
-                var weather = await GetWeatherStaticData();
-                _logger.LogInformation("Weather data - {data}", weather);
+                using (var client = new HttpClient())
+                {
+                    try
+                    {
+                        _logger.LogInformation("{Method} - was called ", "backend.Controllers.WeatherForecastController.Get");
 
-                return weather;
+                        HttpResponseMessage response = await client.GetAsync("https://localhost:44321/weatherforecast");
+                        response.EnsureSuccessStatusCode();
+                        var weather = await response.Content.ReadAsStringAsync();
+
+                        _logger.LogInformation("Weather data - {data}", weather);
+
+                        return weather;
+                    }
+                    catch (HttpRequestException e)
+                    {
+                        Console.WriteLine("\nException Caught!");
+                        Console.WriteLine("Message :{0} ", e.Message);
+                    }
+                }
+
+                return string.Empty;
             }
             catch (Exception ex)
             {
@@ -45,20 +55,5 @@ namespace OpenTelemetrySample.DistributeTracing.Controllers
                 throw;
             }
         }
-
-        private async Task<string> GetWeatherStaticData()
-        {
-            var rng = new Random();
-            var forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
-
-            return JsonSerializer.Serialize(forecasts);
-        }
-
     }
 }
