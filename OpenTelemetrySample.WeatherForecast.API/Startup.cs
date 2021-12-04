@@ -1,17 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using OpenTelemetrySample.WeatherForecast.API.Models;
+using StackExchange.Redis;
+using System;
 
 namespace OpenTelemetrySample.WeatherForecast.API
 {
@@ -30,6 +27,14 @@ namespace OpenTelemetrySample.WeatherForecast.API
             services.AddControllers();
 
             services.AddOpenTelemetryTracing(Configuration);
+
+            services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("DemoDB"));
+
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.InstanceName = "";
+                options.Configuration = "localhost:6379";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,36 +59,44 @@ namespace OpenTelemetrySample.WeatherForecast.API
     }
 
 
-static class ServiceCollectionExtensions
-{
-
-    public static IServiceCollection AddOpenTelemetryTracing(this IServiceCollection services, IConfiguration configuration)
+    static class ServiceCollectionExtensions
     {
-        var exporter = configuration.GetValue<string>("UseExporter").ToLowerInvariant();
-        var zipkinServiceName = configuration.GetValue<string>("Zipkin:ServiceName");
-        var zipkinEndpoint = configuration.GetValue<string>("Zipkin:Endpoint");
 
-        if (!String.IsNullOrEmpty(exporter) && exporter == "zipkin")
+        public static IServiceCollection AddOpenTelemetryTracing(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddOpenTelemetryTracing((builder) => builder
-                    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(zipkinServiceName))
-                    .AddAspNetCoreInstrumentation()
-                    .AddHttpClientInstrumentation()
-                    .AddZipkinExporter(zipkinOptions =>
-                    {
-                        zipkinOptions.Endpoint = new Uri($"{zipkinEndpoint}");
-                    }));
-        }
-        else
-        {
-            services.AddOpenTelemetryTracing((builder) => builder
-                    .AddAspNetCoreInstrumentation()
-                    .AddHttpClientInstrumentation()
-                    .AddConsoleExporter());
-        }
+            var exporter = configuration.GetValue<string>("UseExporter").ToLowerInvariant();
+            var zipkinServiceName = configuration.GetValue<string>("Zipkin:ServiceName");
+            var zipkinEndpoint = configuration.GetValue<string>("Zipkin:Endpoint");
+            using var connection = ConnectionMultiplexer.Connect("localhost:6379");
+
+            if (!String.IsNullOrEmpty(exporter) && exporter == "zipkin")
+            {
+                services.AddOpenTelemetryTracing((builder) => builder
+                        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(zipkinServiceName))
+                        .AddAspNetCoreInstrumentation()
+                        .AddHttpClientInstrumentation()
+                        .AddRedisInstrumentation(connection)
+                        .AddEntityFrameworkCoreInstrumentation((config) =>
+                        {
+                            config.SetDbStatementForStoredProcedure = true;
+                            config.SetDbStatementForText = true;
+                        })
+                        .AddZipkinExporter(zipkinOptions =>
+                        {
+                            zipkinOptions.Endpoint = new Uri($"{zipkinEndpoint}");
+                        }))
+                        .BuildServiceProvider();
+            }
+            else
+            {
+                services.AddOpenTelemetryTracing((builder) => builder
+                        .AddAspNetCoreInstrumentation()
+                        .AddHttpClientInstrumentation()
+                        .AddConsoleExporter());
+            }
 
 
-        return services;
+            return services;
+        }
     }
-}
 }
