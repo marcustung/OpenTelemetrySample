@@ -67,7 +67,9 @@ namespace OpenTelemetrySample.WeatherForecast.API
             var exporter = configuration.GetValue<string>("UseExporter").ToLowerInvariant();
             var zipkinServiceName = configuration.GetValue<string>("Zipkin:ServiceName");
             var zipkinEndpoint = configuration.GetValue<string>("Zipkin:Endpoint");
-            var connection = ConnectionMultiplexer.Connect("localhost:6379");
+            var redisEndpoint = configuration.GetValue<string>("Redis:Endpoint");
+
+            var connection = ConnectionMultiplexer.Connect(redisEndpoint);
             services.AddSingleton<IConnectionMultiplexer>(connection);
 
             if (!String.IsNullOrEmpty(exporter) && exporter == "zipkin")
