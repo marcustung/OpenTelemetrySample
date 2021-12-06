@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using OpenTelemetrySample.WeatherForecast.Client.Extensions;
 using System;
 using System.Diagnostics;
 
@@ -45,14 +46,8 @@ namespace OpenTelemetrySample.DistributeTracing
                 app.UseHsts();
             }
 
-            app.Use(async (context, next) =>
-            {
-                var traceId = Activity.Current?.Id;
-                context.Response.Headers.Add("TraceId", traceId);
-                await next();
-            });
-
-
+            app.UseTraceId();
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -66,8 +61,6 @@ namespace OpenTelemetrySample.DistributeTracing
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            
         }
     }
 

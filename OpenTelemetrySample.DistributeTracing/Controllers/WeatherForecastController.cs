@@ -32,7 +32,7 @@ namespace OpenTelemetrySample.DistributeTracing.Controllers
                     {
                         _logger.LogInformation("{Method} - was called ", "backend.Controllers.WeatherForecastController.Get");
 
-                        HttpResponseMessage response = await client.GetAsync("https://localhost:44321/weatherforecast");
+                        var response = await client.GetAsync("https://localhost:44321/weatherforecast");
                         response.EnsureSuccessStatusCode();
                         var weather = await response.Content.ReadAsStringAsync();
 
