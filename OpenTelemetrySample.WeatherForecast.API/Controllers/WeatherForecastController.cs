@@ -55,5 +55,35 @@ namespace OpenTelemetrySample.WeatherForecast.API.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet]
+        public IEnumerable<WeatherForecast> GetTraditional()
+        {
+            //Log Step1
+            var rnd = new Random();
+            var test = rnd.Next(1, 3);
+
+            if (test % 2 == 0)
+            {
+                Thread.Sleep(test * 3000);
+            }
+
+            //Log Step2
+            var key = Guid.NewGuid().ToString();
+            var redis = _connectionMultiplexer.GetDatabase();
+            redis.StringSet(key, key);
+
+            //Log Step3
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = rnd.Next(-20, 55),
+                Summary = Summaries[rnd.Next(Summaries.Length)]
+            })
+            .ToArray();
+
+            // Collect log data to Monitor Platform
+            // lib / platform lib / components ex : Somehelper
+        }
     }
 }
