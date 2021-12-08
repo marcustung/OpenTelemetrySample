@@ -19,6 +19,7 @@ namespace OpenTelemetrySample.API
                {
                    zipkinOptions.Endpoint = new Uri("http://localhost:9411/api/v2/spans");
                })               
+               .AddConsoleExporter()
                .Build();
 
             DoSomeWork();
@@ -31,6 +32,15 @@ namespace OpenTelemetrySample.API
             {
                 StepOne();
                 StepTwo();
+            }
+
+            using (var activity = MyActivitySource.StartActivity("ActivityRequest", ActivityKind.Server))
+            {
+                activity?.SetTag("http.method", "GET");
+                if (activity != null && activity.IsAllDataRequested == true)
+                {
+                    activity.SetTag("http.url", "http://www.mywebsite.com");
+                }
             }
         }
 

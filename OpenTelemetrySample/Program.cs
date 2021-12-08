@@ -26,14 +26,7 @@ namespace OpenTelemetrySample
                 activity?.SetTag("baz", new int[] { 1, 2, 3 });
             }
 
-            using (var activity = MyActivitySource.StartActivity("ActivityRequest", ActivityKind.Server))
-            {
-                activity?.SetTag("http.method", "GET");
-                if (activity != null && activity.IsAllDataRequested == true)
-                {
-                    activity.SetTag("http.url", "http://www.mywebsite.com");
-                }
-            }
+           
         }
     }
 }
