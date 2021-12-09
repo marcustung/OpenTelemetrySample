@@ -60,6 +60,8 @@ namespace OpenTelemetrySample.WeatherForecast.API.Controllers
         public IEnumerable<WeatherForecast> GetTraditional()
         {
             //Log Step1
+            // using (var someLib = new someLib)
+            // {
             var rnd = new Random();
             var test = rnd.Next(1, 3);
 
@@ -67,13 +69,19 @@ namespace OpenTelemetrySample.WeatherForecast.API.Controllers
             {
                 Thread.Sleep(test * 3000);
             }
+            // }
 
             //Log Step2
+            // using (var someLib = new someLib)
+            // {
             var key = Guid.NewGuid().ToString();
             var redis = _connectionMultiplexer.GetDatabase();
             redis.StringSet(key, key);
+            // }
 
             //Log Step3
+            // using (var someLib = new someLib)
+            // {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
@@ -81,9 +89,12 @@ namespace OpenTelemetrySample.WeatherForecast.API.Controllers
                 Summary = Summaries[rnd.Next(Summaries.Length)]
             })
             .ToArray();
-
+            // }
+            
             // Collect log data to Monitor Platform
-            // lib / platform lib / components ex : Somehelper
+            // open source / platform lib
+            // package / components ex : Somehelper
+            // your code 
         }
     }
 }
