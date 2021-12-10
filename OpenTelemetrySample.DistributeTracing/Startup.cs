@@ -72,6 +72,7 @@ namespace OpenTelemetrySample.DistributeTracing
             var exporter = configuration.GetValue<string>("UseExporter").ToLowerInvariant();
             var zipkinServiceName = configuration.GetValue<string>("Zipkin:ServiceName");
             var zipkinEndpoint = configuration.GetValue<string>("Zipkin:Endpoint");
+            var jaegerEndpoint = configuration.GetValue<string>("Jaeger:Endpoint");
 
             if (!String.IsNullOrEmpty(exporter) && exporter == "zipkin")
             {
@@ -82,7 +83,12 @@ namespace OpenTelemetrySample.DistributeTracing
                         .AddZipkinExporter(zipkinOptions =>
                         {
                             zipkinOptions.Endpoint = new Uri($"{zipkinEndpoint}");
-                        }));
+                        })
+                        .AddJaegerExporter(option =>
+                        {
+                            option.Endpoint = new Uri($"{jaegerEndpoint}");
+                        }
+                        ));
             }
             else
             {
