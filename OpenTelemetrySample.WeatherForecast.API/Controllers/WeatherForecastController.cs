@@ -57,6 +57,7 @@ namespace OpenTelemetrySample.WeatherForecast.API.Controllers
         }
 
         [HttpGet]
+        [Route("Traditional")]
         public IEnumerable<WeatherForecast> GetTraditional()
         {
             //Log Step1

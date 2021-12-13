@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,7 +7,6 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using OpenTelemetrySample.WeatherForecast.Client.Extensions;
 using System;
-using System.Diagnostics;
 
 namespace OpenTelemetrySample.DistributeTracing
 {
@@ -34,7 +32,7 @@ namespace OpenTelemetrySample.DistributeTracing
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -47,7 +45,7 @@ namespace OpenTelemetrySample.DistributeTracing
             }
 
             app.UseTraceId();
-            
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

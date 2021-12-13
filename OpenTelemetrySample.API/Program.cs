@@ -28,7 +28,7 @@ namespace OpenTelemetrySample.API
 
         static void DoSomeWork()
         {
-            using (Activity a = MyActivitySource.StartActivity("SomeWork"))
+            using (var a = MyActivitySource.StartActivity("SomeWork"))
             {
                 StepOne();
                 StepTwo();
@@ -46,7 +46,7 @@ namespace OpenTelemetrySample.API
 
         static void StepOne()
         {
-            using (Activity a = MyActivitySource.StartActivity("StepOne"))
+            using (var a = MyActivitySource.StartActivity("StepOne"))
             {
                 Task.Delay(500);
             }
@@ -54,7 +54,7 @@ namespace OpenTelemetrySample.API
 
         static void StepTwo()
         {
-            using (Activity a = MyActivitySource.StartActivity("StepTwo"))
+            using (var a = MyActivitySource.StartActivity("StepTwo"))
             {
                 Task.Delay(1000);
             }
