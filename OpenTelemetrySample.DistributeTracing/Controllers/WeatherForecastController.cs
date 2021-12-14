@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
-using OpenTelemetrySample.DistributeTracing.Models;
 
 namespace OpenTelemetrySample.DistributeTracing.Controllers
 {

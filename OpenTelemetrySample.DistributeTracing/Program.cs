@@ -49,8 +49,6 @@ namespace OpenTelemetrySample.DistributeTracing
                 .Enrich.WithProperty("ApplicationContext", APP_NAME)
                 .Enrich.WithSpan()
                 .Enrich.FromLogContext()
-                //.WriteTo.Console()
-                //.WriteTo.ApplicationInsights(instrumentationKey, TelemetryConverter.Traces)
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
         }

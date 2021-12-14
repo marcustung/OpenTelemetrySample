@@ -64,39 +64,28 @@ namespace OpenTelemetrySample.WeatherForecast.API
 
         public static IServiceCollection AddOpenTelemetryTracing(this IServiceCollection services, IConfiguration configuration)
         {
-            var exporter = configuration.GetValue<string>("UseExporter").ToLowerInvariant();
             var zipkinServiceName = configuration.GetValue<string>("Zipkin:ServiceName");
             var zipkinEndpoint = configuration.GetValue<string>("Zipkin:Endpoint");
             var redisEndpoint = configuration.GetValue<string>("Redis:Endpoint");
 
             var connection = ConnectionMultiplexer.Connect(redisEndpoint);
             services.AddSingleton<IConnectionMultiplexer>(connection);
-
-            if (!String.IsNullOrEmpty(exporter) && exporter == "zipkin")
-            {
-                services.AddOpenTelemetryTracing((builder) => builder
-                        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(zipkinServiceName))
-                        .AddAspNetCoreInstrumentation()
-                        .AddHttpClientInstrumentation()
-                        .AddRedisInstrumentation(connection)
-                        .AddEntityFrameworkCoreInstrumentation((config) =>
-                        {
-                            config.SetDbStatementForStoredProcedure = true;
-                            config.SetDbStatementForText = true;
-                        })
-                        .AddZipkinExporter(zipkinOptions =>
-                        {
-                            zipkinOptions.Endpoint = new Uri($"{zipkinEndpoint}");
-                        }));
-            }
-            else
-            {
-                services.AddOpenTelemetryTracing((builder) => builder
-                        .AddAspNetCoreInstrumentation()
-                        .AddHttpClientInstrumentation()
-                        .AddConsoleExporter());
-            }
-
+            
+            services.AddOpenTelemetryTracing((builder) => builder
+                    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(zipkinServiceName))
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddRedisInstrumentation(connection)
+                    .AddEntityFrameworkCoreInstrumentation((config) =>
+                    {
+                        config.SetDbStatementForStoredProcedure = true;
+                        config.SetDbStatementForText = true;
+                    })
+                    .AddZipkinExporter(zipkinOptions =>
+                    {
+                        zipkinOptions.Endpoint = new Uri($"{zipkinEndpoint}");
+                    })
+                    .AddConsoleExporter());
 
             return services;
         }

@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
-using OpenTelemetrySample.WeatherForecast.API.Models;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace OpenTelemetrySample.WeatherForecast.API.Controllers
@@ -33,12 +30,12 @@ namespace OpenTelemetrySample.WeatherForecast.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()        
+        public IEnumerable<WeatherForecast> Get()
         {
             var rnd = new Random();
             var test = rnd.Next(1, 3);
 
-            if (test % 2 == 0 )
+            if (test % 2 == 0)
             {
                 Thread.Sleep(test * 3000);
             }
@@ -91,7 +88,7 @@ namespace OpenTelemetrySample.WeatherForecast.API.Controllers
             })
             .ToArray();
             // }
-            
+
             // Collect log data to Monitor Platform
             // open source / platform lib
             // package / components ex : Somehelper

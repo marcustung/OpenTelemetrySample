@@ -67,35 +67,23 @@ namespace OpenTelemetrySample.DistributeTracing
 
         public static IServiceCollection AddOpenTelemetryTracing(this IServiceCollection services, IConfiguration configuration)
         {
-            var exporter = configuration.GetValue<string>("UseExporter").ToLowerInvariant();
             var zipkinServiceName = configuration.GetValue<string>("Zipkin:ServiceName");
             var zipkinEndpoint = configuration.GetValue<string>("Zipkin:Endpoint");
             var jaegerEndpoint = configuration.GetValue<string>("Jaeger:Endpoint");
-
-            if (!String.IsNullOrEmpty(exporter) && exporter == "zipkin")
-            {
-                services.AddOpenTelemetryTracing((builder) => builder
-                        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(zipkinServiceName))
-                        .AddAspNetCoreInstrumentation()
-                        .AddHttpClientInstrumentation()
-                        .AddZipkinExporter(zipkinOptions =>
-                        {
-                            zipkinOptions.Endpoint = new Uri($"{zipkinEndpoint}");
-                        })
-                        .AddJaegerExporter(option =>
-                        {
-                            option.Endpoint = new Uri($"{jaegerEndpoint}");
-                        }
-                        ));
-            }
-            else
-            {
-                services.AddOpenTelemetryTracing((builder) => builder
-                        .AddAspNetCoreInstrumentation()
-                        .AddHttpClientInstrumentation()
-                        .AddConsoleExporter());
-            }
-
+            
+            services.AddOpenTelemetryTracing((builder) => builder
+                    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(zipkinServiceName))
+                    .AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddZipkinExporter(zipkinOptions =>
+                    {
+                        zipkinOptions.Endpoint = new Uri($"{zipkinEndpoint}");
+                    })
+                    .AddJaegerExporter(option =>
+                    {
+                        option.Endpoint = new Uri($"{jaegerEndpoint}");
+                    })
+                    .AddConsoleExporter());
 
             return services;
         }

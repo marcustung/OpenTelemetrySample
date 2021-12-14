@@ -1,16 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using OpenTelemetrySample.WeatherForecast.API.Models;
 using System.Diagnostics;
 
 namespace OpenTelemetrySample.WeatherForecast.API.Controllers
 {
-    [Route("api/[controller]/[action]")] 
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -20,13 +14,13 @@ namespace OpenTelemetrySample.WeatherForecast.API.Controllers
         {
             _context = context;
         }
-       
+
         [HttpGet]
         public bool Get()
         {
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             Activity.ForceDefaultIdFormat = true;
-          
+
             using (Activity a = _source.StartActivity("Insert Data - User"))
             {
                 var testUser1 = new User
