@@ -21,7 +21,6 @@ namespace OpenTelemetrySample.WeatherForecast.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -32,7 +31,7 @@ namespace OpenTelemetrySample.WeatherForecast.API
 
             services.AddStackExchangeRedisCache(options =>
             {
-                options.InstanceName = "";
+                options.InstanceName = "Redis Cache";
                 options.Configuration = "localhost:6379";
             });
         }

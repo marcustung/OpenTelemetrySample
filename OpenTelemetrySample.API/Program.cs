@@ -23,6 +23,7 @@ namespace OpenTelemetrySample.API
                .Build();
 
             DoSomeWork();
+
             Console.WriteLine("Example work done"); 
         }
 

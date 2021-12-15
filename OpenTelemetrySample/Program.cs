@@ -1,8 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using OpenTelemetry;
-using OpenTelemetry.Trace;
+﻿using OpenTelemetry;
 using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using System.Diagnostics;
 
 namespace OpenTelemetrySample
 {
@@ -25,8 +24,6 @@ namespace OpenTelemetrySample
                 activity?.SetTag("bar", "NET Conf 2021, Hej !");
                 activity?.SetTag("baz", new int[] { 1, 2, 3 });
             }
-
-           
         }
     }
 }
