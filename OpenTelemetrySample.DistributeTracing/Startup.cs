@@ -24,9 +24,6 @@ namespace OpenTelemetrySample.DistributeTracing
             services.AddControllersWithViews();
 
             services.AddOpenTelemetryTracing(Configuration);
-
-            // External weather forecast API
-            //services.AddHttpClient<IAzureMapWeatherSvc, AzureMapWeatherSvc>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,7 +66,6 @@ namespace OpenTelemetrySample.DistributeTracing
         {
             var zipkinServiceName = configuration.GetValue<string>("Zipkin:ServiceName");
             var zipkinEndpoint = configuration.GetValue<string>("Zipkin:Endpoint");
-            var jaegerEndpoint = configuration.GetValue<string>("Jaeger:Endpoint");
             
             services.AddOpenTelemetryTracing((builder) => builder
                     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(zipkinServiceName))
@@ -78,10 +74,6 @@ namespace OpenTelemetrySample.DistributeTracing
                     .AddZipkinExporter(zipkinOptions =>
                     {
                         zipkinOptions.Endpoint = new Uri($"{zipkinEndpoint}");
-                    })
-                    .AddJaegerExporter(option =>
-                    {
-                        option.Endpoint = new Uri($"{jaegerEndpoint}");
                     })
                     .AddConsoleExporter());
 

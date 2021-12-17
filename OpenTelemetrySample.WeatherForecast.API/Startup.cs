@@ -75,11 +75,6 @@ namespace OpenTelemetrySample.WeatherForecast.API
                     .AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation()
                     .AddRedisInstrumentation(connection)
-                    .AddEntityFrameworkCoreInstrumentation((config) =>
-                    {
-                        config.SetDbStatementForStoredProcedure = true;
-                        config.SetDbStatementForText = true;
-                    })
                     .AddZipkinExporter(zipkinOptions =>
                     {
                         zipkinOptions.Endpoint = new Uri($"{zipkinEndpoint}");
