@@ -27,8 +27,6 @@ namespace OpenTelemetrySample.WeatherForecast.API
 
             services.AddOpenTelemetryTracing(Configuration);
 
-            services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("DemoDB"));
-
             services.AddStackExchangeRedisCache(options =>
             {
                 options.InstanceName = "Redis Cache";
