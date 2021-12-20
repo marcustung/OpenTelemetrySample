@@ -6,7 +6,7 @@ This is a demo project to show how to use OpenTelemetry for tracing on .NET Core
 2. WebAPI
 3. Redis
 
-![OTelSampleArchitecting](https://user-images.githubusercontent.com/16613047/145649141-f01f7cc7-a7f3-492b-b59f-3dde2de418e7.jpg)
+![image](https://user-images.githubusercontent.com/16613047/146793401-a903f5c1-75c6-456b-b9a4-65019d2fa4a7.png)
 
 ## Step 1 : Run Website with as below 
 https://localhost:44338/api/WeatherForecast
