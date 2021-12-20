@@ -17,4 +17,5 @@ https://localhost:44338/api/WeatherForecast
 ## Step 2 : Open zipkin url as below
 http://localhost:9411/
 
+你可以依據剛剛的請求，來看在 zipkin 中是如何呈現 trace 的內容
 ![image](https://user-images.githubusercontent.com/16613047/146461320-555ae8e6-8d71-416d-a7fb-1cb763909c7c.png)
