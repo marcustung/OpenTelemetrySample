@@ -72,7 +72,13 @@ namespace OpenTelemetrySample.WeatherForecast.API
                     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(zipkinServiceName))
                     .AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation()
-                    .AddRedisInstrumentation(connection)
+                    .AddRedisInstrumentation(
+                        connection,
+                        option=>
+                        {
+                            option.FlushInterval = TimeSpan.FromSeconds(5);
+                        }
+                    )
                     .AddZipkinExporter(zipkinOptions =>
                     {
                         zipkinOptions.Endpoint = new Uri($"{zipkinEndpoint}");

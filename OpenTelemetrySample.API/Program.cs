@@ -35,12 +35,13 @@ namespace OpenTelemetrySample.API
                 StepTwo();
             }
 
-            using (var activity = MyActivitySource.StartActivity("ActivityRequest", ActivityKind.Server))
+            using (var activity = MyActivitySource.StartActivity("StepThree", ActivityKind.Server))
             {
                 activity?.SetTag("http.method", "GET");
                 if (activity != null && activity.IsAllDataRequested == true)
                 {
-                    activity.SetTag("http.url", "http://www.mywebsite.com");
+                    activity.SetTag("http.url", "http://www.google.com");
+                    activity.SetTag("body", "This is a book");
                 }
             }
         }
