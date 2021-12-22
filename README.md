@@ -8,6 +8,10 @@ This is a demo project to show how to use OpenTelemetry for tracing on .NET Core
 
 ![image](https://user-images.githubusercontent.com/16613047/146793401-a903f5c1-75c6-456b-b9a4-65019d2fa4a7.png)
 
+## Step 0 : Init application
+docker run -d -p 9411:9411 openzipkin/zipkin
+
+
 ## Step 1 : Run Website with as below 
 https://localhost:44338/api/WeatherForecast
 
