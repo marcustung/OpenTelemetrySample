@@ -9,9 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{770988E2-BC2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetrySample.API", "OpenTelemetrySample.API\OpenTelemetrySample.API.csproj", "{22C224DA-4732-44FC-A493-3958D0045B74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetrySample.WeatherForecast.Client", "OpenTelemetrySample.DistributeTracing\OpenTelemetrySample.WeatherForecast.Client.csproj", "{BCDCF1F5-B287-4CE4-8EE3-86DB9F335967}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetrySample.WeatherForecast.Client", "OpenTelemetrySample.DistributeTracing\OpenTelemetrySample.WeatherForecast.Client.csproj", "{BCDCF1F5-B287-4CE4-8EE3-86DB9F335967}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetrySample.WeatherForecast.API", "OpenTelemetrySample.WeatherForecast.API\OpenTelemetrySample.WeatherForecast.API.csproj", "{EE77BDDB-FA89-492C-8533-8D5316031551}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetrySample.WeatherForecast.API", "OpenTelemetrySample.WeatherForecast.API\OpenTelemetrySample.WeatherForecast.API.csproj", "{EE77BDDB-FA89-492C-8533-8D5316031551}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTelemetrySample.AspNet", "OpenTelemetrySample.AspNet\OpenTelemetrySample.AspNet.csproj", "{49EE80F9-E035-46AE-BDF2-CBE44F3AD672}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{EE77BDDB-FA89-492C-8533-8D5316031551}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE77BDDB-FA89-492C-8533-8D5316031551}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE77BDDB-FA89-492C-8533-8D5316031551}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49EE80F9-E035-46AE-BDF2-CBE44F3AD672}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49EE80F9-E035-46AE-BDF2-CBE44F3AD672}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49EE80F9-E035-46AE-BDF2-CBE44F3AD672}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49EE80F9-E035-46AE-BDF2-CBE44F3AD672}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +50,7 @@ Global
 		{22C224DA-4732-44FC-A493-3958D0045B74} = {770988E2-BC2B-4F41-901B-2F919BF13D7E}
 		{BCDCF1F5-B287-4CE4-8EE3-86DB9F335967} = {770988E2-BC2B-4F41-901B-2F919BF13D7E}
 		{EE77BDDB-FA89-492C-8533-8D5316031551} = {770988E2-BC2B-4F41-901B-2F919BF13D7E}
+		{49EE80F9-E035-46AE-BDF2-CBE44F3AD672} = {770988E2-BC2B-4F41-901B-2F919BF13D7E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DAF1C5B-9EC8-4178-BEC4-EE63498F0CEC}
